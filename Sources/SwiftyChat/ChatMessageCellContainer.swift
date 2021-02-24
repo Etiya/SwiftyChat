@@ -14,7 +14,6 @@ internal struct ChatMessageCellContainer<Message: ChatMessage>: View {
     public let size: CGSize
     
     public let onQuickReplyItemSelected: (QuickReplyItem) -> Void
-    public let contactFooterSection: (ContactItem, Message) -> [ContactCellButton]
     public let onTextTappedCallback: () -> AttributedTextTappedCallback
     public let onCarouselItemAction: (CarouselItemButton, Message) -> Void
     
@@ -29,26 +28,11 @@ internal struct ChatMessageCellContainer<Message: ChatMessage>: View {
                 callback: onTextTappedCallback
             )
             
-        case .location(let location):
-            LocationCell(
-                location: location,
-                message: message,
-                size: size
-            )
-            
         case .image(let imageLoadingType):
             ImageCell(
                 message: message,
                 imageLoadingType: imageLoadingType,
                 size: size
-            )
-            
-        case .contact(let contact):
-            ContactCell(
-                contact: contact,
-                message: message,
-                size: size,
-                footerSection: contactFooterSection
             )
             
         case .quickReply(let quickReplies):
@@ -63,13 +47,6 @@ internal struct ChatMessageCellContainer<Message: ChatMessage>: View {
                 size: size,
                 message: message,
                 onCarouselItemAction: onCarouselItemAction
-            )
-            
-        case .video(let videoItem):
-            VideoPlaceholderCell(
-                media: videoItem,
-                message: message,
-                size: size
             )
             
         }

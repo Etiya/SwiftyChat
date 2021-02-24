@@ -22,9 +22,6 @@ public final class ChatMessageCellStyle: ObservableObject {
     /// Cell container inset for outgoing messages
     let outgoingCellEdgeInsets: EdgeInsets
     
-    /// Contact Cell Style
-    let contactCellStyle: ContactCellStyle
-    
     /// Image Cell Style
     let imageCellStyle: ImageCellStyle
     
@@ -33,12 +30,6 @@ public final class ChatMessageCellStyle: ObservableObject {
     
     /// Carousel Cell Style
     let carouselCellStyle: CarouselCellStyle
-    
-    /// Location Cell Style
-    let locationCellStyle: LocationCellStyle
-    
-    /// Video Placeholder Cell Style
-    let videoPlaceholderCellStyle: VideoPlaceholderCellStyle
     
     /// Incoming Avatar Style
     let incomingAvatarStyle: AvatarStyle
@@ -63,12 +54,9 @@ public final class ChatMessageCellStyle: ObservableObject {
         ),
         incomingCellEdgeInsets: EdgeInsets = EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4),
         outgoingCellEdgeInsets: EdgeInsets = EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4),
-        contactCellStyle: ContactCellStyle = ContactCellStyle(),
         imageCellStyle: ImageCellStyle = ImageCellStyle(),
         quickReplyCellStyle: QuickReplyCellStyle = QuickReplyCellStyle(),
         carouselCellStyle: CarouselCellStyle = CarouselCellStyle(),
-        locationCellStyle: LocationCellStyle = LocationCellStyle(),
-        videoPlaceholderCellStyle: VideoPlaceholderCellStyle = VideoPlaceholderCellStyle(),
         incomingAvatarStyle: AvatarStyle = AvatarStyle(),
         outgoingAvatarStyle: AvatarStyle = AvatarStyle(
             imageStyle: CommonImageStyle(imageSize: .zero)
@@ -78,12 +66,9 @@ public final class ChatMessageCellStyle: ObservableObject {
         self.outgoingTextStyle = outgoingTextStyle
         self.incomingCellEdgeInsets = incomingCellEdgeInsets
         self.outgoingCellEdgeInsets = outgoingCellEdgeInsets
-        self.contactCellStyle = contactCellStyle
         self.imageCellStyle = imageCellStyle
         self.quickReplyCellStyle = quickReplyCellStyle
         self.carouselCellStyle = carouselCellStyle
-        self.locationCellStyle = locationCellStyle
-        self.videoPlaceholderCellStyle = videoPlaceholderCellStyle
         self.incomingAvatarStyle = incomingAvatarStyle
         self.outgoingAvatarStyle = outgoingAvatarStyle
         

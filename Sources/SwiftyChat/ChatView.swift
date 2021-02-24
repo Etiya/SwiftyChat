@@ -17,7 +17,6 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
     private var onMessageCellTapped: (Message) -> Void = { msg in print(msg.messageKind) }
     private var messageCellContextMenu: (Message) -> AnyView = { _ in EmptyView().embedInAnyView() }
     private var onQuickReplyItemSelected: (QuickReplyItem) -> Void = { _ in }
-    private var contactCellFooterSection: (ContactItem, Message) -> [ContactCellButton] = { _, _ in [] }
     private var onAttributedTextTappedCallback: () -> AttributedTextTappedCallback = { return AttributedTextTappedCallback() }
     private var onCarouselItemAction: (CarouselItemButton, Message) -> Void = { (_, _) in }
     
@@ -43,12 +42,10 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
                     .frame(height: self.messageEditorHeight)
                     .padding(.bottom, 12)
                 
-                PIPVideoCell<Message>()
             }
             .keyboardAwarePadding()
         }
         .environmentObject(DeviceOrientationInfo())
-        .environmentObject(VideoManager<Message>())
         .edgesIgnoringSafeArea(.bottom)
         .dismissKeyboardOnTappingOutside()
 //        .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
@@ -108,7 +105,6 @@ public struct ChatView<Message: ChatMessage, User: ChatUser>: View {
             message: message,
             size: size,
             onQuickReplyItemSelected: onQuickReplyItemSelected,
-            contactFooterSection: contactCellFooterSection,
             onTextTappedCallback: onAttributedTextTappedCallback,
             onCarouselItemAction: onCarouselItemAction
         )
@@ -171,11 +167,6 @@ public extension ChatView {
     /// Triggered when a quickReplyItem is selected (ChatMessageKind.quickReply)
     func onQuickReplyItemSelected(_ action: @escaping (QuickReplyItem) -> Void) -> Self {
         then({ $0.onQuickReplyItemSelected = action })
-    }
-    
-    /// Present contactItem's footer buttons. (ChatMessageKind.contactItem)
-    func contactItemButtons(_ section: @escaping (ContactItem, Message) -> [ContactCellButton]) -> Self {
-        then({ $0.contactCellFooterSection = section })
     }
     
     /// To listen text tapped events like phone, url, date, address

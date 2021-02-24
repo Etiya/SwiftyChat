@@ -22,20 +22,11 @@ public enum ChatMessageKind: CustomStringConvertible {
     /// An image message, from local(UIImage) or remote(URL).
     case image(ImageLoadingKind)
     
-    /// A location message, pins given location & presents on MapKit.
-    case location(LocationItem)
-    
-    /// A contact message, generally for sharing purpose.
-    case contact(ContactItem)
-    
     /// Multiple options, disable itself after selection.
     case quickReply([QuickReplyItem])
     
     /// `CarouselItem` contains title, subtitle, image & button in a scrollable view
     case carousel([CarouselItem])
-    
-    /// A video message, opens the given URL.
-    case video(VideoItem)
     
     public var description: String {
         switch self {
@@ -48,17 +39,11 @@ public enum ChatMessageKind: CustomStringConvertible {
             }
         case .text(let text):
             return "MessageKind.text(\(text))"
-        case .location(let location):
-            return "MessageKind.location(lat: \(location.latitude), lon: \(location.longitude))"
-        case .contact(let contact):
-            return "MessageKind.contact(\(contact.displayName))"
         case .quickReply(let quickReplies):
             let options = quickReplies.map { $0.title }.joined(separator: ", ")
             return "MessageKind.quickReplies(options: \(options))"
         case .carousel(let carouselItems):
             return "MessageKind.carousel(itemCount: \(carouselItems.count))"
-        case .video(let videoItem):
-            return "MessageKind.video(url: \(videoItem.url))"
         }
     }
     

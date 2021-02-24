@@ -23,38 +23,17 @@ public struct MockMessages {
     public enum Kind {
         case Text
         case Image
-        case Location
-        case Contact
         case QuickReply
         case Carousel
-        case Video
         
         private var messageKind: ChatMessageKind {
             switch self {
             case .Text: return .text("")
             case .Image: return .image(.remote(URL(string: "")!))
-            case .Location: return .location(LocationRow(latitude: .nan, longitude: .nan))
-            case .Contact: return .contact(ContactRow(displayName: ""))
             case .QuickReply: return .quickReply([])
             case .Carousel: return .carousel([CarouselRow(title: "", imageURL: nil, subtitle: "", buttons: [])])
-            case .Video: return .video(VideoRow(url: URL(string: "")!, placeholderImage: .remote(URL(string: "")!), pictureInPicturePlayingMessage: ""))
             }
         }
-    }
-    
-    // MARK: - Concrete model for Location
-    private struct LocationRow: LocationItem {
-        var latitude: Double
-        var longitude: Double
-    }
-    
-    // MARK: - Concrete model for Contact
-    private struct ContactRow: ContactItem {
-        var displayName: String
-        var image: UIImage?
-        var initials: String = ""
-        var phoneNumbers: [String] = []
-        var emails: [String] = []
     }
     
     // MARK: - Concrete model for QuickReply
@@ -69,13 +48,6 @@ public struct MockMessages {
         var imageURL: URL?
         var subtitle: String
         var buttons: [CarouselItemButton]
-    }
-    
-    // MARK: - Concrete model for Video
-    private struct VideoRow: VideoItem {
-        var url: URL
-        var placeholderImage: ImageLoadingKind
-        var pictureInPicturePlayingMessage: String
     }
     
     // MARK: - Concrete model for ChatMessage
@@ -202,41 +174,6 @@ public struct MockMessages {
                 isSender: randomUser == Self.sender
             )
             
-        case .Location:
-            let location = LocationRow(
-                latitude: Double.random(in: 36...42),
-                longitude: Double.random(in: 26...45)
-            )
-            return ChatMessageItem(
-                user: randomUser,
-                messageKind: .location(location),
-                isSender: randomUser == Self.sender
-            )
-            
-        case .Contact:
-            let contacts = [
-                ContactRow(displayName: "Enes Karaosman"),
-                ContactRow(displayName: "Adam Surname"),
-                ContactRow(displayName: "Name DummySurname")
-            ]
-            return ChatMessageItem(
-                user: randomUser,
-                messageKind: .contact(contacts.randomElement()!),
-                isSender: randomUser == Self.sender
-            )
-            
-        case .Video:
-            let videoItem = VideoRow(
-                url: URL(string: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!,
-                placeholderImage: .remote(URL(string: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg")!),
-                pictureInPicturePlayingMessage: "This video is playing in picture in picture."
-            )
-            return ChatMessageItem(
-                user: randomUser,
-                messageKind: .video(videoItem),
-                isSender: randomUser == Self.sender
-            )
-            
         }
     }
     
@@ -244,12 +181,9 @@ public struct MockMessages {
         let allCases: [MockMessages.Kind] = [
             .Image,
             .Text, .Text, .Text,
-            .Contact,
             .Text, .Text, .Text,
             .Carousel,
-            .Location,
             .Text, .Text, .Text,
-            .Video,
             .QuickReply
         ]
         return allCases.randomElement()!
